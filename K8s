@@ -1,0 +1,30 @@
+Introdution to K8s 
+
+Kubernetes is like a manager for application packaged in containers - -think of container as lightweight boxes holding everything an app need to run. It automates setting up, scaling (adjust the size based on demand), and maintaining these applications, making it easier for companies to handle large and complex systems. being open-source, It's free and supported bty a large community, and making it reliable and constantly improving. 
+
+> Deployment - Setting up and starting applications.
+> Scaling - Increasing or Decreasing the number of container instances based on demand.
+> Management - Monitoring, Updating and Maintaining applications, ensuring downtime.
+It's ability to manage complex, multi-tiered applications -- those with multiple layers, like front-end, and back-end, and databases working together.
+
+> Automation - Handels deployment, scaling, and management automatically.
+> Abstraction - Hides the complexity of underlying infrastructure, focusing on application needs.
+> Features - Offers flexibility (adaptable to different needs), Portability(can move between environments), and a rich feature set (many tools, like Load balancing and service discovery).
+> Automates boring work - Instead of you manually starting, stopping, or copying app parts accross servers, Kubernetes dose it automatically.
+> Scale apps up/down - If your app gets busy (like during a sale), K8s adds more copies of it to handle traffic. When things clam down, it removes extras to save resources.
+> Handles messes - If an app crashes or a server dies, Kubernetes fixes it by restarting things or moving apps on healthy servers - no human needed.
+> Work anywhere - It doesn't care if your server are on AWS, GCP, oy your basement computer----- It treats all of them the same way 
+
+
+####### Architectural Foundations #####
+K8s employs a master-slave architecture where the CONTROL-PLANE (master node) make global scheduling decisions while worker node execute containerized workloads. This separation of concern allows horizontal scaling - adding more worker nodes increases compute capacity, while redundant master nodes ensure the control plane remains aailable during failure.---- Key architectural components include:-
+
+> API Server - The Central communication hub that exposes the k8s API, validating requests and updating cluster state in the etcd databases.---- Acts as the front-end for the kubernetes control plane. It handles RESTful calls, validates and configure data for the API objects (such as pods, services, deployments), and update the cluster state in the data store. Essentially, All other components communicates through the API server.
+ 
+> etcd - A distributed key- value store maintaining the cluster's configuration data and current state.----A highly available key-value store that holds the entire cluster's configuration and state data. It's the single sourec of truth for the cluster, ensuring data consistency and persistence across the cluster lifecycle.
+
+> Controller Manager - Implement core control loops that reconcile actual cluster state with desired specifications------Runs Various control loops (controllers) that moniter the state of the cluster and make decisions to drive the system towards the desired state. These include the node Controller (Managing node status), Replication Controller (ensure the correct number of pods replicas), and each other. Each controller watches the shared state via the API server and acts accordingly
+
+> Schedular - Responsible for assigning newly create pods to nods. It considers resources availability, quality of service requirements, affinity/anti-affinity specifications, and other scheduling constraints to optimally distribute workloads across the cluster.
+
+> Cloud Controller Manager(optional) - When running K8s in a cloud environment, this component interfaces with underlying cloud provider's API. IT manages cloud-specific functions, such as handling load balancer, managing node instances, and synchronizing with the cloud's networking and strong system
